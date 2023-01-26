@@ -1,47 +1,20 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+<h1>Are you wearing {{ product }}</h1>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<script setup>
+// the 'setup' keyword allows us to use Composition API, which is a way to simplify and streamline the code
+// and Composition API is itself the equivalent of React hooks, which are called composables in Vue
+
+//ref is vuejs equivalent of useState
+import { ref } from 'vue'
+
+const changeWithDelay = function(state, newVal, delay) {
+  setTimeout(() => {
+    state.value = newVal
+  }, delay)
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+const product = ref('Socks')
+changeWithDelay(product, 'clean socks', 1000)
+</script>
