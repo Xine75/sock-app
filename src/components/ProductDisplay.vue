@@ -8,6 +8,7 @@
     <h1>{{ title }}</h1>
     <p v-if="inStock">In Stock</p>
     <p v-else>Out of Stock</p>
+    <p> Shipping: {{ shipping }}</p>
     <ul>
       <li v-for="detail in details">{{ detail }}</li>
     </ul>
@@ -28,6 +29,7 @@
     </button>
   </div>
 </div>
+  <ReviewForm @review-submitted="addReview"></ReviewForm>
 </div>
 </template>
 
@@ -40,6 +42,16 @@ import { ref, computed } from 'vue'
 import socksGreenImage from '../assets/images/socks_green.jpeg'
 import socksBlueImage from '../assets/images/socks_blue.jpeg'
 
+import ReviewForm from './ReviewForm.vue'
+
+const props = defineProps({
+  premium: {
+    type: Boolean,
+    required: true
+  }
+})
+const emit = defineEmits(['add-to-cart'])
+
 const product = ref('Socks')
 const brand = ref('Vue Mastery')
 const selectedVariant = ref(0)
@@ -49,9 +61,10 @@ const variants = ref([
   { id: 2235, color: 'blue', image:socksBlueImage, quantity: 0 }
 ])
 
-
-const addToCart = () => cart.value++
-
+const reviews = ref([])
+const addToCart = () => {
+  emit('add-to-cart', variants.value[selectedVariant.value].id)
+}
 const updateVariant = (index) => {
   selectedVariant.value = index
 }
@@ -66,4 +79,17 @@ const image = computed(() => {
 const inStock = computed(() => {
   return variants.value[selectedVariant.value].quantity > 0
 })
+
+const shipping = computed(() => {
+  if (props.premium) {
+    return 'Free'
+  } else {
+    return '$2.99'
+  }
+})
+
+const addReview = (review) => {
+  reviews.value.push(review)
+  console.log('review: ', reviews.value )
+}
 </script>
