@@ -29,6 +29,7 @@
     </button>
   </div>
 </div>
+  <ReviewList :reviews="reviews"></ReviewList>
   <ReviewForm @review-submitted="addReview"></ReviewForm>
 </div>
 </template>
@@ -43,6 +44,7 @@ import socksGreenImage from '../assets/images/socks_green.jpeg'
 import socksBlueImage from '../assets/images/socks_blue.jpeg'
 
 import ReviewForm from './ReviewForm.vue'
+import ReviewList from './ReviewList.vue'
 
 const props = defineProps({
   premium: {
@@ -90,6 +92,5 @@ const shipping = computed(() => {
 
 const addReview = (review) => {
   reviews.value.push(review)
-  console.log('review: ', reviews.value )
 }
 </script>
